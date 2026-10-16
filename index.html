@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHUBHAM AI | Advanced Learning Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none; /* Anti-copy feature */
+        }
+
+        body {
+            background-color: #030712;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Anti-Hack Attack Screen Cover */
+        #hack-shield {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #7f1d1d;
+            z-index: 100000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #hack-shield h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: blink 0.5s infinite alternate;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+
+        /* App Premium Header */
+        header {
+            background: linear-gradient(135deg, #090d16, #1e1b4b);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 3px solid #f43f5e;
+            box-shadow: 0 4px 20px rgba(244, 63, 94, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, #38bdf8, #f43f5e, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Card Container Design */
+        .glass-box {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        h2, h3 {
+            color: #38bdf8;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
+        }
+
+        /* Chapter Scanner Component */
+        .upload-zone {
+            border: 2px dashed #a855f7;
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #131c31;
+            transition: 0.3s;
+        }
+
+        .upload-zone:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+
+        #preview-img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        /* Primary Simulation Screen */
+        .ai-player-box {
+            position: relative;
+            background: #000;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #f43f5e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scan-line {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #f43f5e;
+            box-shadow: 0 0 15px #f43f5e;
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+
+        /* Expert Selection Menu */
+        .teacher-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .teacher-card {
+            background: #131c31;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .teacher-card:hover {
+            border-color: #f43f5e;
+            background: #1e293b;
+            transform: translateY(-2px);
+        }
+
+        .teacher-avatar {
+            width: 55px;
+            height: 55px;
+            background: #1e1b4b;
+            border-radius: 50%;
+            border: 2px solid #38bdf8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .shubham-ai-card {
+            border: 2px solid #f43f5e !important;
+            background: linear-gradient(135deg, #1e1b4b, #311042) !important;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+        }
+
+        /* 3D Hologram Avatar Simulation Overlay */
+        .avatar-3d-screen {
+            display: none;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1c1917 0%, #000 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .ai-mouth-pulse {
+            width: 110px;
+            height: 110px;
+            background: rgba(244, 63, 94, 0.2);
+            border-radius: 50%;
+            border: 4px solid #f43f5e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: pulse 0.8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(244, 63, 94, 0.5); }
+            100% { transform: scale(1.15); box-shadow: 0 0 30px rgba(244, 63, 94, 0.9); }
+        }
+
+        /* Student Live Tracking WebCam */
+        .cam-box {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #030712;
+            border-radius: 12px;
+            border: 2px dashed #f43f5e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #webcam {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        /* High-Definition Footer */
+        footer {
+            background-color: #02040a;
+            text-align: center;
+            padding: 25px;
+            margin-top: auto;
+            border-top: 2px solid #1e293b;
+        }
+
+        .creator-tag {
+            background: linear-gradient(to right, #38bdf8, #f43f5e, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURE ANTI-HACK BANNER -->
+    <div id="hack-shield">
+        <h1>⚠️ SYSTEM ACTION TERMINATED! ⚠️</h1>
+        <p style="font-size: 1.4rem; color: #fca5a5;">Code Inspection / Illegal Right-Click Activity Detected.</p>
+        <p style="margin-top: 10px; color: #cbd5e1;">SHUBHAM AI सुरक्षा कोर द्वारा ऐप को तत्काल लॉक कर दिया गया है।</p>
+    </div>
+
+    <!-- Header UI -->
+    <header>
+        <h1>SHUBHAM AI CLASSROOM</h1>
+        <p>Next-Generation Intelligent Interface & Coding Lab</p>
+    </header>
+
+    <!-- Content Workspace -->
+    <div class="main-container">
+        
+        <!-- Left Side: Image Upload Core -->
+        <div class="glass-box">
+            <h2>📸 Chapter Image Scanner</h2>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 15px;">चैप्टर का स्क्रीनशॉट या फोटो चुनें। SHUBHAM AI उसका तुरंत 3D एनीमेशन जनरेट करेगा:</p>
+            <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+                <span style="font-size: 2.2rem;">⚡</span>
+                <p style="margin-top: 10px; font-weight: bold; color: #a855f7;">Upload Chapter Photo</p>
+                <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="processChapterImage(event)">
+            </div>
+            <img id="preview-img" alt="Chapter Snapshot">
+        </div>
+
+        <!-- Center: Dynamic Simulation Canvas -->
+        <div class="glass-box">
+            <h2>🎬 Real-Time Interactive Hologram Engine</h2>
+            
+            <div class="ai-player-box" id="displayScreen">
+                <div class="scan-line" id="laserScanner"></div>
+                <p id="screenPlaceholder" style="color: #64748b; font-weight: 500; text-align: center; padding: 25px; line-height: 1.5;">
+                    बाईं ओर से चैप्टर इमेज अपलोड करें या दाईं ओर मौजूद <span style="color: #f43f5e;">SHUBHAM AI Voice Clone</span> अथवा प्रसिद्ध गुरुओं को सक्रिय करें...
+                </p>
+
+                <!-- Avatar Overlay Panel -->
+                <div class="avatar-3d-screen" id="avatarScreen">
+                    <div class="ai-mouth-pulse" id="avatarIcon">🤖</div>
+                    <h3 id="avatarName" style="color: #f43f5e; border: none; font-size: 1.6rem; margin-bottom: 5px;">SHUBHAM AI Core</h3>
+                  
